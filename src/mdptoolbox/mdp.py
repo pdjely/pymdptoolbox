@@ -816,6 +816,7 @@ class PolicyIteration(MDP):
             # This should update the classes policy attribute but leave the
             # value alone
             policy_next, null = self._bellmanOperator()
+            self.rewards.append(_np.max(self.V))
             del null
             # calculate in how many places does the old policy disagree with
             # the new policy
@@ -1437,6 +1438,7 @@ class ValueIteration(MDP):
             # "axis" means the axis along which to operate. In this case it
             # finds the maximum of the the rows. (Operates along the columns?)
             variation = _util.getSpan(self.V - Vprev)
+            self.rewards.append(_np.max(self.V))
 
             if self.verbose:
                 _printVerbosity(self.iter, variation)
