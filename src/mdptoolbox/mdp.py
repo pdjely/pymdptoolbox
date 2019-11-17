@@ -228,6 +228,9 @@ class MDP(object):
         # policy can also be stored as a vector
         self.policy = None
 
+        # Stats
+        self.rewards = []
+
     def __repr__(self):
         P_repr = "P: \n"
         R_repr = "R: \n"
@@ -1557,6 +1560,8 @@ class ValueIterationGS(ValueIteration):
 
                 self.V[s] = max(Q)
 
+            # save current reward
+            self.rewards.append(self.V[s])
             variation = _util.getSpan(self.V - Vprev)
 
             if self.verbose:
