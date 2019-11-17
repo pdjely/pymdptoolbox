@@ -1561,7 +1561,7 @@ class ValueIterationGS(ValueIteration):
                 self.V[s] = max(Q)
 
             # save current reward
-            self.rewards.append(np.max(self.V))
+            self.rewards.append(_np.max(self.V))
             variation = _util.getSpan(self.V - Vprev)
 
             if self.verbose:
