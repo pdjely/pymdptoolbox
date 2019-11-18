@@ -1027,7 +1027,8 @@ class QLearning(MDP):
     """
 
     def __init__(self, transitions, reward, discount, n_iter=10000,
-                 skip_check=False, epsilon=1., alpha=0.01):
+                 skip_check=False, epsilon=1., epsilon_decay=0.9,
+                 alpha=0.01):
         # Initialise a Q-learning MDP.
 
         # The following check won't be done in MDP()'s initialisation, so let's
@@ -1050,6 +1051,7 @@ class QLearning(MDP):
         self.epsilon = epsilon
         self.alpha = alpha
         self.rewards = []
+        self.iters = 0
 
         # Initialisations
         self.Q = _np.zeros((self.S, self.A))
@@ -1119,6 +1121,9 @@ class QLearning(MDP):
             self.V = self.Q.max(axis=1)
             self.policy = self.Q.argmax(axis=1)
             self.rewards.append(_np.max(self.V))
+
+            # Decay epsilon rate
+            self.epsilon = _np.max(0.01, self.epsilon * self.epsilon_decay)
 
         self._endRun()
 
