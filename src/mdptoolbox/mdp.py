@@ -1065,6 +1065,7 @@ class QLearning(MDP):
         s = _np.random.randint(0, self.S)
 
         for n in range(1, self.max_iter + 1):
+            self.iter = n
 
             # Reinitialisation of trajectories every 100 transitions
             if (n % 100) == 0:
