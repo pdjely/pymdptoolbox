@@ -1027,7 +1027,7 @@ class QLearning(MDP):
     """
 
     def __init__(self, transitions, reward, discount, n_iter=10000,
-                 skip_check=False):
+                 skip_check=False, epsilon=1., alpha=0.01):
         # Initialise a Q-learning MDP.
 
         # The following check won't be done in MDP()'s initialisation, so let's
@@ -1070,7 +1070,8 @@ class QLearning(MDP):
             # Action choice : greedy with increasing probability
             # probability 1-(1/log(n+2)) can be changed
             pn = _np.random.random()
-            if pn < (1 - (1 / _math.log(n + 2))):
+            # Use epsilon instead of fixed decay
+            if pn < self.epsilon:
                 # optimal_action = self.Q[s, :].max()
                 a = self.Q[s, :].argmax()
             else:
@@ -1093,9 +1094,10 @@ class QLearning(MDP):
                     r = self.R[s]
 
             # Updating the value of Q
-            # Decaying update coefficient (1/sqrt(n+2)) can be changed
+            # Use learning rate alpha instead of fixed decay schedule
             delta = r + self.discount * self.Q[s_new, :].max() - self.Q[s, a]
-            dQ = (1 / _math.sqrt(n + 2)) * delta
+            dQ = self.alpha * delta
+
             self.Q[s, a] = self.Q[s, a] + dQ
 
             # current state is updated
