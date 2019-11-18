@@ -1047,6 +1047,9 @@ class QLearning(MDP):
         self.R = reward
 
         self.discount = discount
+        self.epsilon = epsilon
+        self.alpha = alpha
+        self.rewards = []
 
         # Initialisations
         self.Q = _np.zeros((self.S, self.A))
@@ -1114,6 +1117,7 @@ class QLearning(MDP):
             # compute the value function and the policy
             self.V = self.Q.max(axis=1)
             self.policy = self.Q.argmax(axis=1)
+            self.rewards.append(_np.max(self.V))
 
         self._endRun()
 
