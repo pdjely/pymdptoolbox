@@ -1049,6 +1049,7 @@ class QLearning(MDP):
 
         self.discount = discount
         self.epsilon = epsilon
+        self.epsilon_decay = epsilon_decay
         self.alpha = alpha
         self.rewards = []
         self.iters = 0
