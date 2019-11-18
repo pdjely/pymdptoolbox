@@ -1124,7 +1124,7 @@ class QLearning(MDP):
             self.rewards.append(_np.max(self.V))
 
             # Decay epsilon rate
-            self.epsilon = _np.max(0.01, self.epsilon * self.epsilon_decay)
+            self.epsilon = max(0.01, self.epsilon * self.epsilon_decay)
 
         self._endRun()
 
